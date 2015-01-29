@@ -1,0 +1,20 @@
+html
+  head
+    title Welcome to express.js!
+    link(href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css", rel="stylesheet")
+    link(href="/css/style.css", rel="stylesheet")
+    script(src='/socket.io/socket.io.js')
+  body
+    h1= header
+    .container#tweet-container
+    script(src='https://code.jquery.com/jquery-2.1.1.js')
+    script.
+      var socket = io();
+      socket.on('connection', function() {
+        console.log('Connected!');
+      });
+      
+      socket.on('tweets', function(tweet) {
+        var html = '<div class="row"><div class="col-md-6 col-md-offset-3 tweet"><a href="https://twitter.com/'+tweet.screen_name+'" target="_blank"><img src="' + tweet.user_profile_image + '" class="avatar pull-left"/></a><div class="names"><span class="full-name">' + tweet.name + ' </span><span class="username">@' +tweet.screen_name + '</span></div><div class="contents"><span class="text">' + tweet.text + '</span></div></div></div>';
+        $('#tweet-container').append(html);
+      });
